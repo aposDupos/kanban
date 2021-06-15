@@ -57,24 +57,23 @@
     </main>
     <footer>
       <div class="footer">
-      <h3>Тыртычный В. А.</h3>
-      <h3>Группа 201-322</h3>
+        <h3>Тыртычный В. А.</h3>
+        <h3>Группа 201-322</h3>
       </div>
     </footer>
   </div>
 </template>
 <script>
-/* eslint-disable */
+
 import TaskCard from "@/components/Task-Card.vue";
 import Modal from "@/components/Modal";
-
-// import {ref} from "vue"
 
 export default {
   name: "Home",
   components: { Modal, TaskCard },
   data() {
     return {
+      lastId: 0,
       time: ((new Date).getDate() + "/" + ((new Date).getMonth() + 1)),
       showModal: false,
       columns: [
@@ -92,32 +91,33 @@ export default {
       tasks: [
         {
           id: 1,
-          date: `${(new Date).getHours()}:${(new Date).getMinutes()} ${(new Date).getDate()}/${((new Date).getMonth() + 1)}/${(new Date).getFullYear()}`,
+          date: `${String((new Date).getHours()).padStart(2, '0')}:${String((new Date).getMinutes()).padStart(2, '0')} ${(new Date).getDate()}/${String(((new Date).getMonth() + 1)).padStart(2, '0')}/${(new Date).getFullYear()}`,
           text: "QUUQQUUQUQUQUQUQU",
           priority: 1,
           column: 0
         },
         {
           id: 2,
-          date: `${(new Date).getHours()}:${(new Date).getMinutes()} ${(new Date).getDate()}/${((new Date).getMonth() + 1)}/${(new Date).getFullYear()}`,
+          date: `${String((new Date).getHours()).padStart(2, '0')}:${String((new Date).getMinutes()).padStart(2, '0')} ${(new Date).getDate()}/${String(((new Date).getMonth() + 1)).padStart(2, '0')}/${(new Date).getFullYear()}`,
           text: "QUUQQUUQUQUQUQUQU",
           priority: 2,
           column: 1
         },
         {
-          id: 4,
-          date: `${(new Date).getHours()}:${(new Date).getMinutes()} ${(new Date).getDate()}/${((new Date).getMonth() + 1)}/${(new Date).getFullYear()}`,
-          text: "QUUQQUUQUQUQUQUQU",
-          priority: 1,
-          column: 0
-        },
-        {
           id: 3,
-          date: `${(new Date).getHours()}:${(new Date).getMinutes()} ${(new Date).getDate()}/${((new Date).getMonth() + 1)}/${(new Date).getFullYear()}`,
+          date: `${String((new Date).getHours()).padStart(2, '0')}:${String((new Date).getMinutes()).padStart(2, '0')} ${(new Date).getDate()}/${String(((new Date).getMonth() + 1)).padStart(2, '0')}/${(new Date).getFullYear()}`,
           text: "QUUQQUUQUQUQUQUQU",
           priority: 3,
           column: 2
+        },
+        {
+          id: 4,
+          date: `${String((new Date).getHours()).padStart(2, '0')}:${String((new Date).getMinutes()).padStart(2, '0')} ${(new Date).getDate()}/${String(((new Date).getMonth() + 1)).padStart(2, '0')}/${(new Date).getFullYear()}`,
+          text: "QUUQQUUQUQUQUQUQU",
+          priority: 1,
+          column: 0
         }
+
       ],
       finishedTasks: [],
       theme: "light"
@@ -161,11 +161,11 @@ export default {
       });
     },
     createTask(task) {
-      const id = this.tasks.length + 1;
+      this.lastId += 1;
       let time = new Date;
-      time = `${time.getHours()}:${time.getMinutes()} ${time.getDate()}/${(time.getMonth() + 1)}/${time.getFullYear()}`;
+      time = `${String(time.getHours()).padStart(2, '0')}:${String(time.getMinutes()).padStart(2, '0')} ${time.getDate()}/${String((time.getMonth() + 1)).padStart(2, '0')}/${time.getFullYear()}`;
       const newTask = {
-        id: id,
+        id: this.lastId,
         date: time,
         text: task.description,
         priority: task.priority,
@@ -174,6 +174,12 @@ export default {
       this.tasks.push(newTask);
       this.showModal = false;
     }
+  },
+  mounted() {
+    this.tasks.forEach(task => {
+      if (task.id > this.lastId)
+        this.lastId = task.id;
+    });
   },
   created() {
     const time = new Date;
@@ -214,13 +220,15 @@ h1, h2, h3, p, div, a {
   color: var(--text-color);
 }
 
-#app{
+#app {
   display: grid;
   grid-template-rows: 100px 1fr 50px;
 }
-footer{
+
+footer {
   background: var(--main-color);
 }
+
 .footer {
   border-radius: 32px 32px 0 0;
   background: var(--main-color);
@@ -246,12 +254,15 @@ footer{
   color: #2c3e50;
   background: var(--background-color);
 }
-#app, main, header, body{
+
+#app, main, header, body {
   background: var(--background-color);
 }
-#app{
+
+#app {
   height: 100vh;
 }
+
 .container {
   max-width: 1140px;
   display: grid;

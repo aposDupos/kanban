@@ -20,7 +20,7 @@
           <input
             type="text"
             id="description"
-            v-model.lazy="newTask.description"
+            v-model="newTask.description"
             class="modal__description"
           /></label>
       </form>
