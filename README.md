@@ -22,3 +22,8 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Будущий функционал:
+1. Перенести хранение данных
+2. Добавить адаптивность
+3. Усовершенствовать работу модального окна
